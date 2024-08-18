@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/assets/images/logo.jpg" type="image/x-icon">
+    <!-- Document title -->
+    <title>SAGINI SYSTEM - Report Missing person</title>
+    <!-- Stylesheets & Fonts -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
+        rel="stylesheet">
+    <!-- Plugins Stylesheets -->
+    <link rel="stylesheet" href="assets/css/loader/loaders.css">
+    <link rel="stylesheet" href="assets/css/font-awesome/font-awesome.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/aos/aos.css">
+    <link rel="stylesheet" href="assets/css/swiper/swiper.css">
+    <link rel="stylesheet" href="assets/css/lightgallery.min.css">
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Responsive Stylesheet -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+
+<body>
+    <!-- Loader Start -->
+    <div class="css-loader">
+        <div class="loader-inner line-scale d-flex align-items-center justify-content-center"></div>
+    </div>
+    <!-- Loader End -->
+    <!-- Header Start -->
+    <header class="position-absolute w-100">
+        <div class="container">
+            <div class="top-header d-none d-sm-flex justify-content-between align-items-center">
+                <div class="contact">
+                    <a href="tel:+1234567890" class="tel"><i class="fa fa-phone" aria-hidden="true"></i>+1234567890</a>
+                    <a href="mailto:info@yourmail.com"><i class="fa fa-envelope"
+                            aria-hidden="true"></i>info@yourmail.com</a>
+                </div>
+                <nav class="d-flex aic">
+                    <a href="login.html
+                    " class="login"><i class="fa fa-user" aria-hidden="true"></i>Login</a>
+                    <ul class="nav social d-none d-md-flex">
+                        <li><a href="https://www.facebook.com/fh5co" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="Multipurpose"></a>
+                <div class="group d-flex align-items-center">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <a class="login-icon d-sm-none" href="#"><i class="fa fa-user"></i></a>
+                    <a class="cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+                </div>
+                <a class="search-icon d-none d-md-block" href="#"><i class="fa fa-search"></i></a>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="person.html">Persons</a></li>
+                        <li class="nav-item"><a class="nav-link" href="cars.html">Cars</a></li>
+                        <li class="nav-item"><a class="nav-link" href="items.html">Items</a></li>
+                        <li class="nav-item"><a class="nav-link" href="pet.html">Pets</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                    </ul>
+                    <form class="bg-white search-form" method="get" id="searchform">
+                        <div class="input-group">
+                            <input class="field form-control" id="s" name="s" type="text" placeholder="Search">
+                            <span class="input-group-btn">
+                                <input class="submit btn btn-primary" id="searchsubmit" name="submit" type="submit"
+                                    value="Search">
+                                    <script>
+ // Firebase configuration
+ const firebaseConfig = {
+    apiKey: "AIzaSyAMSSLJQDAzl-8S00d7wNMQ-dVSJKtgsic",
+    authDomain: "saginialert.firebaseapp.com",
+    databaseURL: "https://saginialert-default-rtdb.firebaseio.com",
+    projectId: "saginialert",
+    storageBucket: "saginialert.appspot.com",
+    messagingSenderId: "583050302650",
+    appId: "1:583050302650:web:9692156cf008b37dab5e83"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const storage = firebase.storage();
+
+
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    searchReports(searchTerm);
+    searchCarReports(searchTerm);
+});
+
+function searchReports(searchTerm) {
+    reportsRef.once('value', function(snapshot) {
+        const reports = snapshot.val();
+        const filteredReports = filterReports(reports, searchTerm);
+        displayReports(filteredReports, 'searchResults');
+    });
+}
+
+function searchCarReports(searchTerm) {
+    carReportsRef.once('value', function(snapshot) {
+        const carReports = snapshot.val();
+        const filteredCarReports = filterReports(carReports, searchTerm);
+        displayReports(filteredCarReports, 'searchResults');
+    });
+}
+
+function filterReports(data, searchTerm) {
+    const filtered = {};
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const item = data[key];
+            if (item.name.toLowerCase().includes(searchTerm) ||
+                (item.description && item.description.toLowerCase().includes(searchTerm)) ||
+                (item.location && item.location.toLowerCase().includes(searchTerm))) {
+                filtered[key] = item;
+            }
+        }
+    }
+    return filtered;
+}
+
+function displayReports(data, elementId) {
+    const results = document.getElementById(elementId);
+    results.innerHTML = '';
+
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const item = data[key];
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('result-item');
+            resultItem.innerHTML = `
+                <h3>${item.name}</h3>
+                <p><strong>Description:</strong> ${item.description}</p>
+                <p><strong>Location:</strong> ${item.location}</p>
+            `;
+            results.appendChild(resultItem);
+        }
+    }
+}
+</script>
+
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Header End -->
+        <!-- Firebase App (the core Firebase SDK) -->
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+        <!-- Firebase Realtime Database SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
+        <!-- Firebase Storage SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-storage.js"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            .formbold-mb-3 {
+                margin-bottom: 15px;
+            }
+            .formbold-relative {
+                position: relative;
+            }
+            .formbold-opacity-0 {
+                opacity: 0;
+            }
+            .formbold-stroke-current {
+                stroke: #ffffff;
+                z-index: 999;
+            }
+            #supportCheckbox:checked ~ div span {
+                opacity: 1;
+            }
+            #supportCheckbox:checked ~ div {
+                background: #6a64f1;
+                border-color: #6a64f1;
+            }
+            .formbold-main-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 48px;
+            }
+            .formbold-form-wrapper {
+                margin: 0 auto;
+                max-width: 570px;
+                width: 100%;
+                background: white;
+                padding: 40px;
+            }
+            .formbold-img {
+                display: block;
+                margin: 0 auto 45px;
+            }
+            .formbold-input-wrapp > div {
+                display: flex;
+                gap: 20px;
+            }
+            .formbold-input-flex {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 15px;
+            }
+            .formbold-input-flex > div {
+                width: 50%;
+            }
+            .formbold-form-input {
+                width: 100%;
+                padding: 13px 22px;
+                border-radius: 5px;
+                border: 1px solid #dde3ec;
+                background: #ffffff;
+                font-weight: 500;
+                font-size: 16px;
+                color: #536387;
+                outline: none;
+                resize: none;
+            }
+            .formbold-form-input::placeholder,
+            select.formbold-form-input,
+            .formbold-form-input[type='date']::-webkit-datetime-edit-text,
+            .formbold-form-input[type='date']::-webkit-datetime-edit-month-field,
+            .formbold-form-input[type='date']::-webkit-datetime-edit-day-field,
+            .formbold-form-input[type='date']::-webkit-datetime-edit-year-field {
+                color: rgba(83, 99, 135, 0.5);
+            }
+            .formbold-form-input:focus {
+                border-color: #6a64f1;
+                box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+            }
+            .formbold-form-label {
+                color: #536387;
+                font-size: 14px;
+                line-height: 24px;
+                display: block;
+                margin-bottom: 10px;
+            }
+            .formbold-checkbox-label {
+                display: flex;
+                cursor: pointer;
+                user-select: none;
+                font-size: 16px;
+                line-height: 24px;
+                color: #536387;
+            }
+            .formbold-checkbox-label a {
+                margin-left: 5px;
+                color: #6a64f1;
+            }
+            .formbold-input-checkbox {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border-width: 0;
+            }
+            .formbold-checkbox-inner {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 20px;
+                height: 20px;
+                margin-right: 16px;
+                margin-top: 2px;
+                border: 0.7px solid #dde3ec;
+                border-radius: 3px;
+            }
+            .formbold-form-file {
+                padding: 12px;
+                font-size: 14px;
+                line-height: 24px;
+                color: rgba(83, 99, 135, 0.5);
+            }
+            .formbold-form-file::-webkit-file-upload-button {
+                display: none;
+            }
+            .formbold-form-file:before {
+                content: 'Upload';
+                display: inline-block;
+                background: #EEEEEE;
+                border: 0.5px solid #E7E7E7;
+                border-radius: 3px;
+                padding: 3px 12px;
+                outline: none;
+                white-space: nowrap;
+                -webkit-user-select: none;
+                user-select: none;
+                cursor: pointer;
+                color: #637381;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 16px;
+                margin-right: 10px;
+            }
+            .formbold-btn {
+                font-size: 16px;
+                border-radius: 5px;
+                padding: 14px 25px;
+                border: none;
+                font-weight: 500;
+                background-color: #6a64f1;
+                color: white;
+                cursor: pointer;
+                margin-top: 25px;
+            }
+            .formbold-btn:hover {
+                box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+            }
+            .formbold-w-45 {
+                width: 45%;
+            }
+        </style>
+    </head>
+    <body>
+    
+    <div class="formbold-main-wrapper">
+        <div class="formbold-form-wrapper">
+            <img src="your-image-url-here.jpg" alt="Form Image">
+            <form id="missingPersonForm" enctype="multipart/form-data">
+                <div class="formbold-mb-3">
+                    <label for="fullname" class="formbold-form-label">Full Name of Missing Person</label>
+                    <input type="text" name="fullname" id="fullname" placeholder="Full Name" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="age" class="formbold-form-label">Age</label>
+                    <input type="number" name="age" id="age" placeholder="Age" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="gender" class="formbold-form-label">Gender</label>
+                    <select name="gender" id="gender" class="formbold-form-input">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="dateLastSeen" class="formbold-form-label">Date Last Seen</label>
+                    <input type="date" name="dateLastSeen" id="dateLastSeen" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="lastLocation" class="formbold-form-label">Last Known Location</label>
+                    <input type="text" name="lastLocation" id="lastLocation" placeholder="Last Known Location" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="description" class="formbold-form-label">Physical Description</label>
+                    <textarea name="description" id="description" placeholder="Physical Description" class="formbold-form-input" rows="4"></textarea>
+                </div>
+    
+                <div class="formbold-input-flex">
+                    <div>
+                        <label for="height" class="formbold-form-label">Height</label>
+                        <input type="text" name="height" id="height" placeholder="Height" class="formbold-form-input" />
+                    </div>
+                    <div>
+                        <label for="weight" class="formbold-form-label">Weight</label>
+                        <input type="text" name="weight" id="weight" placeholder="Weight" class="formbold-form-input" />
+                    </div>
+                </div>
+    
+                <div class="formbold-input-flex">
+                    <div>
+                        <label for="hairColor" class="formbold-form-label">Hair Color</label>
+                        <input type="text" name="hairColor" id="hairColor" placeholder="Hair Color" class="formbold-form-input" />
+                    </div>
+                    <div>
+                        <label for="eyeColor" class="formbold-form-label">Eye Color</label>
+                        <input type="text" name="eyeColor" id="eyeColor" placeholder="Eye Color" class="formbold-form-input" />
+                    </div>
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="marks" class="formbold-form-label">Distinguishing Marks or Features</label>
+                    <input type="text" name="marks" id="marks" placeholder="Distinguishing Marks or Features" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="clothing" class="formbold-form-label">Clothing Worn When Last Seen</label>
+                    <textarea name="clothing" id="clothing" placeholder="Clothing Worn When Last Seen" class="formbold-form-input" rows="4"></textarea>
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="photoUpload" class="formbold-form-label">Photo Upload</label>
+                    <input type="file" name="photoUpload" id="photoUpload" class="formbold-form-input formbold-form-file" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="reportingParty" class="formbold-form-label">Contact Information for Reporting Party</label>
+                    <input type="text" name="reportingParty" id="reportingParty" placeholder="Full Name" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="reportingPhone" class="formbold-form-label">Phone Number</label>
+                    <input type="text" name="reportingPhone" id="reportingPhone" placeholder="Phone Number" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="reportingEmail" class="formbold-form-label">Email Address</label>
+                    <input type="email" name="reportingEmail" id="reportingEmail" placeholder="example@email.com" class="formbold-form-input" />
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="relationship" class="formbold-form-label">Relationship to Missing Person</label>
+                    <select name="relationship" id="relationship" class="formbold-form-input">
+                        <option value="parent">Parent</option>
+                        <option value="sibling">Sibling</option>
+                        <option value="friend">Friend</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+    
+                <div class="formbold-mb-3">
+                    <label for="additionalInfo" class="formbold-form-label">Additional Information</label>
+                    <textarea name="additionalInfo" id="additionalInfo" placeholder="Anything else that might be relevant" class="formbold-form-input" rows="4"></textarea>
+                </div>
+    
+                <div class="formbold-checkbox-wrapper">
+                    <label for="supportCheckbox" class="formbold-checkbox-label">
+                      <div class="formbold-relative">
+                        <input
+                          type="checkbox"
+                          id="supportCheckbox"
+                          class="formbold-input-checkbox"
+                        />
+                        <div class="formbold-checkbox-inner">
+                          <span class="formbold-opacity-0">
+                            <svg
+                              width="11"
+                              height="8"
+                              viewBox="0 0 11 8"
+                              class="formbold-stroke-current"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M8.81868 0.688604L4.16688 5.4878L2.05598 3.29507C1.70417 2.92271 1.1569 2.96409 0.805082 3.29507C0.453266 3.66742 0.492357 4.24663 0.805082 4.61898L3.30689 7.18407C3.54143 7.43231 3.85416 7.55642 4.16688 7.55642C4.47961 7.55642 4.79233 7.43231 5.02688 7.18407L10.0696 2.05389C10.4214 1.68154 10.4214 1.10233 10.0696 0.729976C9.71776 0.357624 9.17049 0.357625 8.81868 0.688604Z"
+                                fill="white"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                      I consent to sharing my data publicly to help locate the missing person</a>
+                    </label>
+                  </div>
+            
+                  <button class="formbold-btn">Submit</button>
+                </form>
+              </div>
+            </div>
+            
+            
+    <script>
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAMSSLJQDAzl-8S00d7wNMQ-dVSJKtgsic",
+        authDomain: "saginialert.firebaseapp.com",
+        databaseURL: "https://saginialert-default-rtdb.firebaseio.com",
+        projectId: "saginialert",
+        storageBucket: "saginialert.appspot.com",
+        messagingSenderId: "583050302650",
+        appId: "1:583050302650:web:9692156cf008b37dab5e83"
+      };
+    
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+      const storage = firebase.storage();
+    
+      document.getElementById("missingPersonForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+    
+        // Gather form data
+        const formData = {
+          fullname: document.getElementById("fullname").value,
+          age: document.getElementById("age").value,
+          gender: document.getElementById("gender").value,
+          dateLastSeen: document.getElementById("dateLastSeen").value,
+          lastLocation: document.getElementById("lastLocation").value,
+          description: document.getElementById("description").value,
+          height: document.getElementById("height").value,
+          weight: document.getElementById("weight").value,
+          hairColor: document.getElementById("hairColor").value,
+          eyeColor: document.getElementById("eyeColor").value,
+          marks: document.getElementById("marks").value,
+          clothing: document.getElementById("clothing").value,
+          reportingParty: document.getElementById("reportingParty").value,
+          reportingPhone: document.getElementById("reportingPhone").value,
+          reportingEmail: document.getElementById("reportingEmail").value,
+          relationship: document.getElementById("relationship").value,
+          additionalInfo: document.getElementById("additionalInfo").value,
+          consent: document.getElementById("consentCheckbox").checked
+        };
+    
+        // Handle file upload
+        const fileInput = document.getElementById("photoUpload");
+        const file = fileInput.files[0];
+    
+        if (file) {
+          const storageRef = storage.ref('photos/' + file.name);
+          storageRef.put(file).then(function(snapshot) {
+            snapshot.ref.getDownloadURL().then(function(url) {
+              formData.photoUrl = url;
+    
+              // Save form data to Firebase
+              database.ref('missingPersons').push(formData)
+                .then(function() {
+                  alert("Data successfully saved to Firebase!");
+                  document.getElementById("missingPersonForm").reset();
+                })
+                .catch(function(error) {
+                  console.error("Error saving data: ", error);
+                });
+            });
+          }).catch(function(error) {
+            console.error("Error uploading file: ", error);
+          });
+        } else {
+          // Save form data without file to Firebase
+          database.ref('missingPersons').push(formData)
+            .then(function() {
+              alert("Data successfully saved to Firebase!");
+              document.getElementById("missingPersonForm").reset();
+            })
+            .catch(function(error) {
+              console.error("Error saving data: ", error);
+            });
+        }
+      });
+    </script>
+    
+     <!--jQuery-->
+     <script src="assets/js/jquery-3.3.1.js"></script>
+     <!--Plugins-->
+     <script src="assets/js/bootstrap.bundle.js"></script>
+     <script src="assets/js/loaders.css.js"></script>
+     <script src="assets/js/aos.js"></script>
+     <script src="assets/js/swiper.min.js"></script>
+     <script src="assets/js/lightgallery-all.min.js"></script>
+     <!--Template Script-->
+     <script src="assets/js/main.js"></script>
+    
+ </body>
+ 
+ </html>
+    
