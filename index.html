@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="/assets/images/logo.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon">
     <!-- Document title -->
     <title>SAGINI SYSTEM</title>
     <!-- Stylesheets & Fonts -->
@@ -15,10 +15,10 @@
         rel="stylesheet">
     <!-- Plugins Stylesheets -->
     <link rel="stylesheet" href="assets/css/loader/loaders.css">
-    <link rel="stylesheet" href="assets/css/font-awesome/font-awesome.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/aos/aos.css">
-    <link rel="stylesheet" href="assets/css/swiper/swiper.css">
+    <link rel="stylesheet" href="assets/css/aos.css">
+    <link rel="stylesheet" href="assets/css/swiper.css">
     <link rel="stylesheet" href="assets/css/lightgallery.min.css">
     <!-- Template Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -52,7 +52,7 @@
                 </nav>
             </div>
             <nav class="navbar navbar-expand-md navbar-light">
-                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="Multipurpose"></a>
+                <a class="navbar-brand" href="index.html"><img src="/images/logo.png" alt="Multipurpose"></a>
                 <div class="group d-flex align-items-center">
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -77,81 +77,6 @@
                             <span class="input-group-btn">
                                 <input class="submit btn btn-primary" id="searchsubmit" name="submit" type="submit"
                                     value="Search">
-                                    <script>
- // Firebase configuration
- const firebaseConfig = {
-    apiKey: "AIzaSyAMSSLJQDAzl-8S00d7wNMQ-dVSJKtgsic",
-    authDomain: "saginialert.firebaseapp.com",
-    databaseURL: "https://saginialert-default-rtdb.firebaseio.com",
-    projectId: "saginialert",
-    storageBucket: "saginialert.appspot.com",
-    messagingSenderId: "583050302650",
-    appId: "1:583050302650:web:9692156cf008b37dab5e83"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-const storage = firebase.storage();
-
-
-document.getElementById('searchInput').addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-    searchReports(searchTerm);
-    searchCarReports(searchTerm);
-});
-
-function searchReports(searchTerm) {
-    reportsRef.once('value', function(snapshot) {
-        const reports = snapshot.val();
-        const filteredReports = filterReports(reports, searchTerm);
-        displayReports(filteredReports, 'searchResults');
-    });
-}
-
-function searchCarReports(searchTerm) {
-    carReportsRef.once('value', function(snapshot) {
-        const carReports = snapshot.val();
-        const filteredCarReports = filterReports(carReports, searchTerm);
-        displayReports(filteredCarReports, 'searchResults');
-    });
-}
-
-function filterReports(data, searchTerm) {
-    const filtered = {};
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            const item = data[key];
-            if (item.name.toLowerCase().includes(searchTerm) ||
-                (item.description && item.description.toLowerCase().includes(searchTerm)) ||
-                (item.location && item.location.toLowerCase().includes(searchTerm))) {
-                filtered[key] = item;
-            }
-        }
-    }
-    return filtered;
-}
-
-function displayReports(data, elementId) {
-    const results = document.getElementById(elementId);
-    results.innerHTML = '';
-
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            const item = data[key];
-            const resultItem = document.createElement('div');
-            resultItem.classList.add('result-item');
-            resultItem.innerHTML = `
-                <h3>${item.name}</h3>
-                <p><strong>Description:</strong> ${item.description}</p>
-                <p><strong>Location:</strong> ${item.location}</p>
-            `;
-            results.appendChild(resultItem);
-        }
-    }
-}
-</script>
-
                             </span>
                         </div>
                     </form>
@@ -220,7 +145,7 @@ function displayReports(data, elementId) {
                 <div class="row">
                     <div class="col-sm-6 col-lg-4">
                         <div class="media" data-aos="fade-up" data-aos-delay="200" data-aos-duration="400">
-                            <img class="mr-4" src="assets/images/service1.png" alt="Cetralised">
+                            <img class="mr-4" src="/images/service1.png" alt="Cetralised">
                             <div class="media-body">
                                 <h5>Centralized Alert System</h5>
                                Reporting and searching are done centrally from the app.
@@ -229,7 +154,7 @@ function displayReports(data, elementId) {
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="media" data-aos="fade-up" data-aos-delay="400" data-aos-duration="600">
-                            <img class="mr-4" src="assets/images/service2.png" alt="Notifications">
+                            <img class="mr-4" src="/images/service2.png" alt="Notifications">
                             <div class="media-body">
                                 <h5>Push Notifications</h5>
                                 Push notifications are sent to make sure the community is alerted of occurences.
@@ -238,7 +163,7 @@ function displayReports(data, elementId) {
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="media" data-aos="fade-up" data-aos-delay="600" data-aos-duration="800">
-                            <img class="mr-4" src="assets/images/service3.png" alt="Connectivity">
+                            <img class="mr-4" src="/images/service3.png" alt="Connectivity">
                             <div class="media-body">
                                 <h5>Social Media Connectivity</h5>
                                 Reports are aired across social media for improved connectivity and engagement.
@@ -247,7 +172,7 @@ function displayReports(data, elementId) {
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="media" data-aos="fade-up" data-aos-delay="600" data-aos-duration="800">
-                            <img class="mr-4" src="assets/images/service5.png" alt="Connectivity">
+                            <img class="mr-4" src="/images/service5.png" alt="Connectivity">
                             <div class="media-body">
                                 <h5>Panic Button</h5>
                                 Press it if you think you're lost and you'll get help to find your way.
@@ -276,8 +201,8 @@ function displayReports(data, elementId) {
                     
                 <div class="col-md-6" data-aos="fade-left" data-aos-delay="400" data-aos-duration="800">
                     <div class="featured-img">
-                        <img class="featured-big" src="assets/images/featured-img1.jpg" alt="Featured 1">
-                        <img class="featured-small" src="assets/images/featured-img2.jpg" alt="Featured 2">
+                        <img class="featured-big" src="/images/featured-img1.jpg" alt="Featured 1">
+                        <img class="featured-small" src="/images/featured-img2.jpg" alt="Featured 2">
                     </div>
                 </div>
             </div>
@@ -391,16 +316,90 @@ function displayReports(data, elementId) {
         <!-- Foot Note End -->
     </footer>
     <!-- Footer Endt -->
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+           apiKey: "AIzaSyAMSSLJQDAzl-8S00d7wNMQ-dVSJKtgsic",
+           authDomain: "saginialert.firebaseapp.com",
+           databaseURL: "https://saginialert-default-rtdb.firebaseio.com",
+           projectId: "saginialert",
+           storageBucket: "saginialert.appspot.com",
+           messagingSenderId: "583050302650",
+           appId: "1:583050302650:web:9692156cf008b37dab5e83"
+       };
+       
+       // Initialize Firebase
+       firebase.initializeApp(firebaseConfig);
+       const database = firebase.database();
+       const storage = firebase.storage();
+       
+       
+       document.getElementById('searchInput').addEventListener('input', function() {
+           const searchTerm = this.value.toLowerCase();
+           searchReports(searchTerm);
+           searchCarReports(searchTerm);
+       });
+       
+       function searchReports(searchTerm) {
+           reportsRef.once('value', function(snapshot) {
+               const reports = snapshot.val();
+               const filteredReports = filterReports(reports, searchTerm);
+               displayReports(filteredReports, 'searchResults');
+           });
+       }
+       
+       function searchCarReports(searchTerm) {
+           carReportsRef.once('value', function(snapshot) {
+               const carReports = snapshot.val();
+               const filteredCarReports = filterReports(carReports, searchTerm);
+               displayReports(filteredCarReports, 'searchResults');
+           });
+       }
+       
+       function filterReports(data, searchTerm) {
+           const filtered = {};
+           for (const key in data) {
+               if (data.hasOwnProperty(key)) {
+                   const item = data[key];
+                   if (item.name.toLowerCase().includes(searchTerm) ||
+                       (item.description && item.description.toLowerCase().includes(searchTerm)) ||
+                       (item.location && item.location.toLowerCase().includes(searchTerm))) {
+                       filtered[key] = item;
+                   }
+               }
+           }
+           return filtered;
+       }
+       
+       function displayReports(data, elementId) {
+           const results = document.getElementById(elementId);
+           results.innerHTML = '';
+       
+           for (const key in data) {
+               if (data.hasOwnProperty(key)) {
+                   const item = data[key];
+                   const resultItem = document.createElement('div');
+                   resultItem.classList.add('result-item');
+                   resultItem.innerHTML = `
+                       <h3>${item.name}</h3>
+                       <p><strong>Description:</strong> ${item.description}</p>
+                       <p><strong>Location:</strong> ${item.location}</p>
+                   `;
+                   results.appendChild(resultItem);
+               }
+           }
+       }
+       </script>
     <!--jQuery-->
-    <script src="assets/js/jquery-3.3.1.js"></script>
+    <script src="asset/js/jquery-3.3.1.js"></script>
     <!--Plugins-->
-    <script src="assets/js/bootstrap.bundle.js"></script>
-    <script src="assets/js/loaders.css.js"></script>
-    <script src="assets/js/aos.js"></script>
-    <script src="assets/js/swiper.min.js"></script>
-    <script src="assets/js/lightgallery-all.min.js"></script
+    <script src="asset/js/bootstrap.bundle.js"></script>
+    <script src="asset/js/loaders.css.js"></script>
+    <script src="asset/js/aos.js"></script>
+    <script src="asset/js/swiper.min.js"></script>
+    <script src="asset/js/lightgallery-all.min.js"></script>
     <!--Template Script-->
-    <script src="assets/js/main.js"></script>
+    <script src="asset/js/main.js"></script>
    
 </body>
 

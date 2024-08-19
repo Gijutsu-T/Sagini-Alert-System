@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="/assets/images/logo.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/logo.jpg" type="image/x-icon">
     <!-- Document title -->
     <title>SAGINI SYSTEM - Profile</title>
     <!-- Stylesheets & Fonts -->
@@ -52,7 +52,7 @@
                 </nav>
             </div>
             <nav class="navbar navbar-expand-md navbar-light">
-                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="Multipurpose"></a>
+                <a class="navbar-brand" href="index.html"><img src="/images/logo.png" alt="Multipurpose"></a>
                 <div class="group d-flex align-items-center">
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -77,81 +77,6 @@
                             <span class="input-group-btn">
                                 <input class="submit btn btn-primary" id="searchsubmit" name="submit" type="submit"
                                     value="Search">
-                                    <script>
- // Firebase configuration
- const firebaseConfig = {
-    apiKey: "AIzaSyAMSSLJQDAzl-8S00d7wNMQ-dVSJKtgsic",
-    authDomain: "saginialert.firebaseapp.com",
-    databaseURL: "https://saginialert-default-rtdb.firebaseio.com",
-    projectId: "saginialert",
-    storageBucket: "saginialert.appspot.com",
-    messagingSenderId: "583050302650",
-    appId: "1:583050302650:web:9692156cf008b37dab5e83"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-const storage = firebase.storage();
-
-
-document.getElementById('searchInput').addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-    searchReports(searchTerm);
-    searchCarReports(searchTerm);
-});
-
-function searchReports(searchTerm) {
-    reportsRef.once('value', function(snapshot) {
-        const reports = snapshot.val();
-        const filteredReports = filterReports(reports, searchTerm);
-        displayReports(filteredReports, 'searchResults');
-    });
-}
-
-function searchCarReports(searchTerm) {
-    carReportsRef.once('value', function(snapshot) {
-        const carReports = snapshot.val();
-        const filteredCarReports = filterReports(carReports, searchTerm);
-        displayReports(filteredCarReports, 'searchResults');
-    });
-}
-
-function filterReports(data, searchTerm) {
-    const filtered = {};
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            const item = data[key];
-            if (item.name.toLowerCase().includes(searchTerm) ||
-                (item.description && item.description.toLowerCase().includes(searchTerm)) ||
-                (item.location && item.location.toLowerCase().includes(searchTerm))) {
-                filtered[key] = item;
-            }
-        }
-    }
-    return filtered;
-}
-
-function displayReports(data, elementId) {
-    const results = document.getElementById(elementId);
-    results.innerHTML = '';
-
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            const item = data[key];
-            const resultItem = document.createElement('div');
-            resultItem.classList.add('result-item');
-            resultItem.innerHTML = `
-                <h3>${item.name}</h3>
-                <p><strong>Description:</strong> ${item.description}</p>
-                <p><strong>Location:</strong> ${item.location}</p>
-            `;
-            results.appendChild(resultItem);
-        }
-    }
-}
-</script>
-
                             </span>
                         </div>
                     </form>
